@@ -1,0 +1,59 @@
+.like-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white; /* Fondo blanco */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border: 2px solid lightgray; /* Borde gris por defecto */
+}
+
+.like-button i {
+  transition: color 0.3s ease;
+}
+
+/* Estilos para el corazón no liked (gris con contorno gris) */
+.pi-heart {
+  color: lightgray; /* Corazón con contorno gris */
+}
+
+/* Estilos para el corazón liked (relleno rojo) */
+.pi-heart-fill {
+  color: #E74C3C; /* Corazón lleno, rojo moderno */
+}
+
+/* Cuando el botón está en estado liked, cambia el color del borde y fondo */
+.like-button.liked {
+  background-color: white; /* Fondo sigue siendo blanco */
+  border-color: #E74C3C; /* Borde rojo cuando está liked */
+}
+
+.like-button.liked i {
+  color: #E74C3C; /* Corazón rojo lleno cuando está liked */
+}
+
+/* Cuando no está liked, el borde debe ser gris */
+.like-button:not(.liked) {
+  border-color: lightgray; /* Borde gris cuando no está liked */
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}

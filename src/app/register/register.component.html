@@ -1,0 +1,143 @@
+<div class="font-[sans-serif] bg-white md:h-screen">
+  <div class="grid md:grid-cols-2 items-center gap-8 h-full">
+    <div class="max-md:order-1 p-4 bg-gray-50 h-full">
+      <img src="https://readymadeui.com/signin-image.webp" class="lg:max-w-[90%] w-full h-full object-contain block mx-auto" alt="login-image" />
+    </div>
+
+    <div class="flex items-center p-6 h-full w-full">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="max-w-lg w-full mx-auto group" novalidate>
+        <div class="mb-12 flex justify-center">
+          <h3 class="text-primary-30 md:text-3xl text-2xl font-extrabold max-md:text-center">Crear una cuenta</h3>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+          <div class="sm:col-span-2">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+            <input
+              type="text"
+              formControlName="name"
+              id="name"
+              placeholder="Nombre"
+              required
+              class="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary-60 focus:border-secondary-50 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 peer-invalid:focus:border-red-500"
+            >
+            <span class="mt-2 hidden text-sm text-red-500 peer-invalid:peer-focus:block">
+              El campo no puede estar vacío
+            </span>
+          </div>
+
+          <div class="w-full">
+            <label for="fatherSurname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno</label>
+            <input
+              type="text"
+              formControlName="fatherSurname"
+              id="fatherSurname"
+              class="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary-60 focus:border-secondary-50 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 peer-invalid:focus:border-red-500"
+              placeholder="Apellido Paterno"
+              required
+            >
+            <span class="mt-2 hidden text-sm text-red-500 peer-invalid:peer-focus:block">Este campo no puede estar vacío</span>
+          </div>
+
+          <div class="w-full">
+            <label for="matherSurname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Materno</label>
+            <input
+              type="text"
+              formControlName="matherSurname"
+              id="matherSurname"
+              class="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary-60 focus:border-secondary-50 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 peer-invalid:focus:border-red-500"
+              placeholder="Apellido Materno"
+              required
+            >
+            <span class="mt-2 hidden text-sm text-red-500 peer-invalid:peer-focus:block">Este campo no puede estar vacío</span>
+          </div>
+
+          <div class="w-full">
+            <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Edad</label>
+            <input
+              type="number"
+              min="1"
+              formControlName="age"
+              id="age"
+              class="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary-60 focus:border-secondary-50 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 peer-invalid:focus:border-red-500"
+              placeholder="12"
+              required
+            >
+            <span class="mt-2 hidden text-sm text-red-500 peer-invalid:peer-focus:block">Este campo no puede estar vacío</span>
+          </div>
+
+          <div>
+            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Género</label>
+            <select
+              id="category"
+              formControlName="gender"
+              class="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary-60 focus:border-secondary-50 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 peer-invalid:focus:border-red-500"
+              required
+            >
+              <option value="" disabled selected>Selecciona un género</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otros">Otros</option>
+            </select>
+            <span class="mt-2 hidden text-sm text-red-500 peer-invalid:peer-focus:block">Debes seleccionar un género</span>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+            <input
+              type="email"
+              (input)="clearEmailError()"
+              formControlName="email"
+              id="email"
+              required
+              (blur)="checkEmail()"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              placeholder="Correo electrónico"
+              class="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary-60 focus:border-secondary-50 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+            >
+            <!-- Display validation error if email is invalid -->
+            <span *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="mt-2 text-sm text-red-500">
+                Por favor, ingrese un email válido
+            </span>
+            <!-- Display backend error if the email is not available -->
+            <span *ngIf="emailErrorMessage" class="mt-2 text-sm text-red-500">
+            {{ emailErrorMessage }}
+            </span>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña
+            <input type="password" formControlName="password" id="password" placeholder="contraseña" required pattern=".{8,}"
+                   class="peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary-60 focus:border-secondary-50 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <span class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Necesitas un contraseña de 8 caracteres como minimo</span>
+            </label>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-semibold mb-4">Selecciona al menos 3 categorías</h3>
+
+        <div class="grid grid-cols-3 gap-4">
+          <button
+            type="button"
+            *ngFor="let categoria of categorias"
+            (click)="toggleCategoria(categoria.id)"
+            [ngClass]="categoriasSeleccionadas.includes(categoria.id) ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'"
+            class="px-4 py-2 rounded-full">
+            {{ categoria.name }}
+          </button>
+        </div>
+
+        <p class="text-sm mt-6 text-gray-800">¿Ya tienes una cuenta?
+          <a routerLink="/login" class="text-blue-500 font-semibold hover:underline ml-1">Inicia sesión aquí</a>
+        </p>
+
+        <!-- Botón Registrarse, deshabilitado hasta que se seleccionen al menos 3 categorías -->
+        <button
+          (click)="enviarCategorias()"
+          type="submit"
+          [disabled]="categoriasSeleccionadas.length < 3 "
+          class="w-full inline-flex justify-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-secondary-70 rounded-full focus:ring-4 focus:ring-secondary-60 focus:border-secondary-50 dark:focus:ring-primary-900 hover:bg-primary-800 disabled:opacity-50 disabled:pointer-events-none">
+          Registrarse
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+

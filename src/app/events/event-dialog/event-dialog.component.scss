@@ -1,0 +1,22 @@
+.p-dialog .p-button-success {
+  background-color: #4CAF50; /* Verde Material Design */
+  border-color: #4CAF50;
+}
+
+.p-dialog .p-button-secondary {
+  background-color: #c4c4c4;
+  border-color: #c4c4c4;
+}
+
+.p-dialog .p-field label {
+  color: #4CAF50;
+}
+
+.p-dialog .p-inputtext {
+  border-color: #4CAF50;
+}
+
+.p-toast {
+  --toast-severity-success-bg: #4CAF50; /* Color verde para el éxito */
+  --toast-severity-success-color: white;
+}

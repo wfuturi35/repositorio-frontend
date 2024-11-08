@@ -1,0 +1,136 @@
+@if ({
+  status: authService.authStatus$ | async,
+  user: authService.currentUser$ | async
+}; as auth;)
+{
+  @if (auth?.status?.isAuthenticated) {
+
+    <div class="bg-primary-20 flex items-center justify-between p-4">
+      <!-- Logo -->
+      <div class="flex items-center space-x-2">
+        <img src="../assets/img/chilli/favicon-32x32.png" alt="Culture App Logo" class="h-8">
+        <a [routerLink]="'/events'">
+        <span class="text-2xl text-white font-bold hidden sm:inline">Culture App</span>
+        </a>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="relative flex items-center w-full lg:w-1/3">
+        <input
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="searchEvents()"
+          type="text"
+          placeholder="Buscar eventos"
+          class="w-full p-3 pl-12 pr-5 rounded-full bg-gray-800 text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 ease-in-out"
+        />
+        <span  class="absolute left-3 flex items-center text-white" (click)="searchEvents()">
+          <i class="pi pi-search"></i>
+        </span>
+      </div>
+
+
+      <!-- Action Icons -->
+      <div class="flex items-center space-x-4">
+        <!-- Eventos -->
+        <a [routerLink]="'/events'">
+          <div class="text-center" (click)="selectOption('eventos')">
+            <i [ngClass]="{'text-green-400': selectedOption === 'eventos', 'text-white': selectedOption !== 'eventos'}" class="pi pi-calendar text-lg"></i>
+            <span [ngClass]="{'text-green-400': selectedOption === 'eventos', 'text-white': selectedOption !== 'eventos'}" class="block text-sm">Eventos</span>
+            <div [ngClass]="{'bg-green-400': selectedOption === 'eventos'}" class="h-1 mt-1"></div>
+          </div>
+        </a>
+
+        <!-- Publicar Evento -->
+        @if(auth.status?.userRole === 'USER'){
+        <div class="text-center" (click)="selectOption('Publicar Evento'); openDialog()">
+          <i [ngClass]="{'text-green-400': selectedOption === 'Publicar Evento', 'text-white': selectedOption !== 'Publicar Evento'}" class="pi pi-plus-circle text-lg"></i>
+          <span [ngClass]="{'text-green-400': selectedOption === 'Publicar Evento', 'text-white': selectedOption !== 'Publicar Evento'}" class="block text-sm">Publicar Evento</span>
+          <div [ngClass]="{'bg-green-400': selectedOption === 'Publicar Evento'}" class="h-1 mt-1"></div>
+        </div>
+        }
+        @if(auth.status?.userRole === 'ADMIN'){
+        <!-- Usuarios -->
+          <a [routerLink]="'/administrator/user-table'">
+            <div class="text-center" (click)="selectOption('usuarios')">
+              <i [ngClass]="{'text-green-400': selectedOption === 'usuarios', 'text-white': selectedOption !== 'usuarios'}" class="pi pi-user text-lg"></i>
+              <span [ngClass]="{'text-green-400': selectedOption === 'usuarios', 'text-white': selectedOption !== 'usuarios'}" class="block text-sm">Usuarios</span>
+              <div [ngClass]="{'bg-green-400': selectedOption === 'usuarios'}" class="h-1 mt-1"></div>
+            </div>
+          </a>
+        }
+
+        @if(auth.status?.userRole === 'MANAGER'){
+          <a [routerLink]="'/events/event-added'">
+            <div class="text-center" (click)="selectOption('addEvent')">
+              <i [ngClass]="{'text-green-400': selectedOption === 'addEvent', 'text-white': selectedOption !== 'addEvent'}" class="pi pi-megaphone text-lg"></i>
+              <span [ngClass]="{'text-green-400': selectedOption === 'addEvent', 'text-white': selectedOption !== 'addEvent'}" class="block text-sm">Mis Eventos</span>
+              <div [ngClass]="{'bg-green-400': selectedOption === 'addEvent'}" class="h-1 mt-1"></div>
+            </div>
+          </a>
+        }
+
+        <!-- Perfil -->
+        <div class="card flex justify-content-center gap-2">
+          <div class="mt-1 inline-block cursor-pointer relative" (click)="menu.toggle($event)">
+            <div class="relative">
+              <p-avatar
+                icon="pi pi-user"
+                styleClass="mr-2"
+                size="large"
+                [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }"
+                shape="circle" />
+            </div>
+          </div>
+          <p-menu #menu [model]="items" [popup]="true">
+            <ng-template pTemplate="end">
+              <button pRipple class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround">
+                <p-avatar
+                  icon="pi pi-user"
+                  styleClass="mr-2"
+                  size="large"
+                  [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }"
+                  shape="circle" />
+                <span class="font-bold">{{auth.user?.fullName}}</span>
+              </button>
+            </ng-template>
+          </p-menu>
+
+      </div>
+    </div>
+    </div>
+  } @else {
+    <nav class="bg-primary-20 border-gray-200 dark:bg-gray-900">
+      <div class="max-w-screen-xs flex items-center justify-between mx-auto p-4">
+        <!-- Logo y Nombre -->
+        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src="/assets/img/chilli/favicon-32x32.png" class="h-4" alt="CultureApp Logo" />
+          <span class="text-2xl font-semibold text-white">CultureApp</span>
+        </a>
+
+        <!-- Botones de Iniciar Sesión y Registrarse -->
+        <ul class="flex items-center space-x-4">
+          <li>
+            <button mat-flat-button color="accent" [routerLink]="'/login'" class="rounded-full text-sm px-6 py-2">
+              Iniciar Sesión
+            </button>
+          </li>
+          <li>
+            <button mat-stroked-button color="primary" [routerLink]="'/register'" class="rounded-full text-sm px-6 py-2">
+              Registrarse
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  }
+}
+
+<ngx-ui-loader
+  bgsColor = "#ffcc48"
+  text="Espere un momento, porfavor ..."
+  pbColor = "#b12b67"
+  fgsType="square-jelly-box"
+></ngx-ui-loader>
+
+<router-outlet></router-outlet>
+

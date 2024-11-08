@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>¿Eres Organizador de Evento?</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre Comercial</mat-label>
+        <input matInput formControlName="nombreComercial" required />
+        <mat-error *ngIf="userForm.get('nombreComercial')?.hasError('required')">
+          El nombre comercial es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>DNI</mat-label>
+        <input matInput formControlName="dni" required />
+        <mat-error *ngIf="userForm.get('dni')?.hasError('required')">
+          El DNI es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="userForm.get('dni')?.hasError('minlength')">
+          El DNI debe tener exactamente 8 caracteres.
+        </mat-error>
+        <mat-error *ngIf="userForm.get('dni')?.hasError('maxlength')">
+          El DNI debe tener exactamente 8 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email2" required />
+        <mat-error *ngIf="userForm.get('email2')?.hasError('required')">
+          El email es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="userForm.get('email2')?.hasError('email')">
+          El email debe ser válido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" required />
+        <mat-error *ngIf="userForm.get('phone')?.hasError('required')">
+          El teléfono es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="userForm.get('phone')?.hasError('minlength')">
+          El teléfono debe tener al menos 9 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Empresa</mat-label>
+        <input matInput formControlName="empresa" required />
+        <mat-error *ngIf="userForm.get('empresa')?.hasError('required')">
+          La empresa es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Comentario (opcional)</mat-label>
+        <textarea matInput formControlName="comentario"></textarea>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="loading || !userForm.valid">
+          {{ loading ? 'enviando...' : 'Enviar' }}
+        </button>
+        <button mat-button mat-dialog-close>Cancelar</button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+

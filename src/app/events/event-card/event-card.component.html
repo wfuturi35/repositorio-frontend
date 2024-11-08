@@ -1,0 +1,40 @@
+<p>event-card works!</p>
+
+
+<ng-template let-event pTemplate="item">
+  <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow m-2 p-3">
+    <div class="mb-3">
+      <div class="relative mx-auto">
+        <img
+          [ngSrc]="event.imgEvent"
+          [alt]="event.title"
+          width="200"
+          height="200"
+          class="w-full border-round" />
+        <p-tag
+          [value]="event.company"
+          [severity]="getSeverity(event.company)"
+          class="absolute"
+          [ngStyle]="{ 'left.px': 5, 'top.px': 5 }" />
+      </div>
+    </div>
+    <div class="mb-3 font-medium">
+      {{ event.title }}
+    </div>
+    <div class="mb-2">
+      <i class="pi pi-calendar" style="color: var(--primary-color)"></i>
+      {{event.start_date}} - {{event.end_date}}
+    </div>
+    <div class="flex justify-between items-center">
+      <div class="mt-0 font-semibold text-xl">
+        Costo entrada (referencial): {{ 'S/' + event.price }}
+      </div>
+      <span>
+              <p-button icon="pi pi-heart" severity="secondary" [outlined]="true" />
+          </span>
+    </div>
+    <div class="flex items-center justify-end mt-2">
+      <button mat-flat-button class="bg-green-500">Ver evento</button>
+    </div>
+  </div>
+</ng-template>

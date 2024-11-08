@@ -1,0 +1,100 @@
+
+
+@if (eventDetail$  | async;  as detailEvent){
+<div class="event-info">
+  <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+      <!-- Heading & Columns -->
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <!-- Left Column (User Information) -->
+        <div class="user-info">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">{{detailEvent.title}}</h2>
+          <div class="user-card rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 mt-6">
+            <div class="description text-sm text-gray-600 dark:text-gray-300">
+              <p>Fecha de Inicio: <span>{{detailEvent.start_date}}</span></p>
+              <p class="mt-2">Fecha de Fin: <span>{{detailEvent.end_date}}</span></p>
+              <p class="mt-4">{{detailEvent.description}}</p>
+              <p class="mt-4">Empresa: {{detailEvent.company}}</p>
+              <p class="text-xs mt-4">Categoría:
+                <span>{{ obtenerCategoriaPorId(detailEvent.categoria_id) }}</span>
+              </p>
+              <p class="mt-4">Costo: S/.{{detailEvent.price}}</p>
+            </div>
+            <div class="text-center mt-6">
+              <a [href]="detailEvent.urlEvent" target="_blank" [attr.aria-disabled]="detailEvent.urlEvent ? null : true">
+                <button
+                  type="button"
+                  [disabled]="!detailEvent.urlEvent"
+                  class="rounded-lg px-5 py-2.5 text-sm font-medium text-white bg-blue-600 border border-black hover:bg-blue-700 focus:outline-none"
+                  pTooltip="Este evento no tiene link de página"
+                  tooltipPosition="top"
+                  [tooltipDisabled]="Boolean(detailEvent.urlEvent)"
+                >
+                  Ir a la pagina del evento
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column (Events Information) -->
+        <div class="events-info">
+          <div class="flex justify-between items-center">
+              <!--Redirigir a popup de create-event-->
+              <button type="button" (click)="showDialog()" class="rounded-lg px-5 py-2.5 mr-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+                Dar Puntuación
+              </button>
+              <div class="card flex justify-content-center">
+                <p-dialog header="Calificación" [modal]="true" [(visible)]="visible" [style]="{ width: '15rem', height: '15rem' }">
+                  <p-rating [(ngModel)]="value" stars="5">
+                    <ng-template pTemplate="cancelicon">
+                      <img
+                        src="https://primefaces.org/cdn/primeng/images/demo/rating/cancel.png"
+                        width="25px"
+                        height="25px" />
+                    </ng-template>
+                    <ng-template pTemplate="onicon">
+                      <img
+                        src="https://firebasestorage.googleapis.com/v0/b/image-demo-1046d.appspot.com/o/start_img.png?alt=media&token=e82279f2-d591-44a9-b7ce-24aa4d26a5ce"
+                        width="25px"
+                        height="25px" />
+                    </ng-template>
+                    <ng-template pTemplate="officon">
+                      <img
+                        src="https://firebasestorage.googleapis.com/v0/b/image-demo-1046d.appspot.com/o/image.png?alt=media&token=f3934b98-f74e-424f-98c1-24f649ffe6b6"
+                        width="25px"
+                        height="25px" />
+                    </ng-template>
+                  </p-rating>
+
+                  <div class="flex justify-content-end gap-4 pt-12">
+                    <button mat-button color="accent" (click)="visible = false">Cancel</button>
+                    <button mat-raised-button color="primary" (click)="visible = false; guardarPuntuacion()">Save</button>
+                  </div>
+                </p-dialog>
+              </div>
+              <!--Redirigir a popup update-event-->
+              <!--<button type="button" class="rounded-lg px-5 py-2.5 mr-2 text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none">
+                Compartir Evento
+              </button>-->
+          </div>
+
+          <!-- Container for event cards -->
+          <div class="flex gap-4 mt-6">
+            <!-- Event Card -->
+            <div class="w-100 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+              <div class="h-60 w-full mb-4">
+                <a href="{{detailEvent.urlEvent}}" target="_blank">
+                  <!--Imagen del evento-->
+                  <img class="mx-auto h-full dark:hidden" src="{{detailEvent.imgEvent}}" alt="" />
+                  <img class="mx-auto hidden h-full dark:block" src="{{detailEvent.imgEvent}}" alt="" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+}

@@ -1,0 +1,82 @@
+<div class="flex justify-end mb-3 mt-8">
+  <input
+    pInputText
+    type="text"
+    (input)="filterUsers($event)"
+    placeholder="Buscar por nombre"
+    class="w-full sm:w-1/3 p-2 border border-gray-300 rounded" />
+</div>
+
+<div class="overflow-x-auto">
+  <p-table
+    [value]="filteredUsers"
+    [paginator]="true"
+    [rows]="10"
+    [globalFilterFields]="['fullName']">
+
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-200">
+        <th class="p-2">ID</th>
+        <th class="p-2">Nombre Completo</th>
+        <th class="p-2">Email</th>
+        <th class="p-2">Nombre Comercial</th>
+        <th class="p-2">Email 2</th>
+        <th class="p-2">DNI</th>
+        <th class="p-2">Empresa</th>
+        <th class="p-2">Roles</th>
+        <th class="p-2">Acción</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-user>
+      <tr class="hover:bg-gray-100">
+        <td class="p-2">{{ user.id }}</td>
+        <td class="p-2">{{ user.fullName }}</td>
+        <td class="p-2">{{ user.email }}</td>
+        <td class="p-2">{{ user.nombreComercial }}</td>
+        <td class="p-2">{{ user.email2 }}</td>
+        <td class="p-2">{{ user.dni }}</td>
+        <td class="p-2">{{ user.empresa }}</td>
+        <td class="p-2">{{ user.roles.join(', ') }}</td>
+        <td class="p-2">
+          <button pButton icon="pi pi-pencil" (click)="showDialog(user)" label="Agregar Rol"></button>
+        </td>
+      </tr>
+      <p-dialog
+        [(visible)]="displayDialog"
+        header="Agregar Rol"
+        [modal]="true"
+        [style]="{'max-width': '600px', 'min-height': '380px'}"> <!-- Aumentamos el ancho y la altura mínima -->
+
+        <h2 class="text-lg font-semibold mb-4">Seleccionar Rol para Usuario ID: {{  selectedUser?.id  }}</h2>
+
+        <label for="role" class="block text-sm font-medium text-gray-700">Rol:</label>
+
+        <p-dropdown
+          [options]="roles"
+          [(ngModel)]="selectedRole"
+          placeholder="Selecciona un rol"
+          class="mb-4">
+        </p-dropdown>
+
+        <div class="mt-16 flex justify-end"> <!-- Añadimos margen superior para separar los botones -->
+          <button
+            pButton
+            label="Agregar"
+            (click)="addRole(selectedUser?.id, selectedRole)"
+            class="bg-blue-600 text-white hover:bg-blue-700 rounded-lg p-2 transition duration-200">
+          </button>
+          <button
+            pButton
+            label="Cancelar"
+            (click)="displayDialog = false"
+            class="ml-2 bg-gray-300 text-gray-800 hover:bg-gray-400 rounded-lg p-2 transition duration-200">
+          </button>
+        </div>
+      </p-dialog>
+
+    </ng-template>
+  </p-table>
+</div>
+
+

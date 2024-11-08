@@ -1,0 +1,64 @@
+<div class="flex justify-center p-4">
+  <mat-card class="w-full max-w-md example-card" appearance="outlined">
+    <mat-card-header class="flex justify-center">
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title class="text-lg font-bold">Culture App</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <mat-icon>email</mat-icon>
+          <mat-form-field fxFlex appearance="outline">
+            <input
+              matInput
+              placeholder="E-mail"
+              aria-label="E-mail"
+              formControlName="email"
+              #email />
+            <mat-error [input]="email" [group]="loginForm" appFieldError="invalid">
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <mat-icon matPrefix>vpn_key</mat-icon>
+          <mat-form-field fxFlex appearance="outline">
+            <input
+              matInput
+              placeholder="Contraseña"
+              aria-label="Password"
+              type="password"
+              formControlName="password"
+              #password />
+            <mat-hint>Minimo 8 caracteres</mat-hint>
+            <mat-error
+              [input]="password"
+              [group]="loginForm"
+              [appFieldError]="['required', 'minlength', 'maxlength']">
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" class="top-pad">
+          @if ( loginError ) {
+            <div class="mat-caption error"> Usuario o Contraseña Incorrecta. Ingrese nuevamente Porfavor </div>
+          }
+        </div>
+        <div class="flex justify-between mb-5">
+          ¿No tienes una cuenta?
+          <a class="text-secondary-50" [routerLink]="'/register'">Registrate Aquí</a>
+        </div>
+
+        <mat-card-actions class="flex justify-center">
+          <button class="w-full"
+            mat-flat-button
+            type="submit"
+            color="primary"
+            [disabled]="loginForm.invalid">
+            Iniciar Sesión
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+

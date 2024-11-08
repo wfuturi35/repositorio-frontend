@@ -1,0 +1,15 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espacio entre los campos del formulario */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre los botones */
+  margin-top: 16px; /* Espacio adicional arriba de los botones */
+}
+
+button {
+  min-width: 100px; /* Ancho mínimo para los botones */
+}

@@ -1,0 +1,114 @@
+
+  <p-dialog header="Editar Evento" [(visible)]="display" [modal]="true" [style]="{width: '500px'}" [closable]="false">
+    @if (eventOwner){
+      <form [formGroup]="eventForm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Campos del formulario -->
+          <div>
+            <label for="title" class="block text-sm font-medium">Título</label>
+            <input
+              id="title"
+              formControlName="title"
+              type="text"
+              pInputText
+              class="w-full p-2 border-full rounded">
+          </div>
+          <div>
+            <label for="description" class="block text-sm font-medium">Descripción</label>
+            <input
+              id="description"
+              formControlName="description"
+              type="text"
+              pInputText
+              class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label for="start_date" class="block text-sm font-medium">Fecha Inicio</label>
+            <input
+              id="start_date"
+              formControlName="start_date"
+              type="date"
+              pInputText
+              class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label for="end_date" class="block text-sm font-medium">Fecha Fin</label>
+            <input
+              id="end_date"
+              formControlName="end_date"
+              type="date"
+              pInputText
+              class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label for="price" class="block text-sm font-medium">Precio</label>
+            <input
+              id="price"
+              formControlName="price"
+              type="number"
+              pInputText
+              class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label for="imgEvent" class="block text-sm font-medium">URL Imagen</label>
+            <input
+              id="imgEvent"
+              formControlName="imgEvent"
+              type="text"
+              pInputText
+              class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label for="imgEvent" class="block text-sm font-medium">Empresa u Organización</label>
+            <input
+              id="company"
+              formControlName="company"
+              type="text"
+              pInputText
+              class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label for="urlEvent" class="block text-sm font-medium">Url Evento</label>
+            <input
+              id="urlEvent"
+              formControlName="urlEvent"
+              type="text"
+              pInputText
+              class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Categoría</label>
+            <p-dropdown
+              formControlName="categoryId"
+              [options]="categorias"
+              optionLabel="nombre"
+              optionValue="id"
+              class="w-full">
+            </p-dropdown>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium">Región</label>
+            <p-dropdown
+              formControlName="regionId"
+              [options]="regiones"
+              optionLabel="nombre"
+              optionValue="id"
+              class="w-full">
+            </p-dropdown>
+          </div>
+        </div>
+      </form>
+
+
+      <ng-template pTemplate="footer">
+        <div class="flex justify-center">
+          <button pButton type="button" label="Actualizar" class="p-button-success" (click)="updateEvent()" [disabled]="eventForm.invalid"></button>
+          <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="display=false"></button>
+        </div>
+      </ng-template>
+    }
+  </p-dialog>
+  <p-toast></p-toast>
+
+

@@ -1,0 +1,35 @@
+@if (currentUser) {
+  <div>
+    <mat-card appearance="outlined">
+      <mat-card-header style="border: 1px">
+        <div
+          mat-card-avatar
+          [style.background-image]="'url(' + currentUser.photo + ')'"
+          style="margin-right: 16px; background-size: cover;">
+          @if (!currentUser.photo) {
+            <mat-icon style="zoom: 1.8">account_circle</mat-icon>
+          }
+        </div>
+        <mat-card-title-group>
+          <mat-card-title>{{ currentUser.fullName }}</mat-card-title>
+          <mat-card-subtitle>{{ currentUser.role }}</mat-card-subtitle>
+        </mat-card-title-group>
+        <div fxFlex></div>
+        @if (editMode) {
+          <mat-card-actions>
+            <button mat-icon-button (click)="editUser(currentUser._id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-card-actions>
+        }
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <p><span class="mat-input bold">E-mail</span></p>
+        <p>{{ currentUser.email }}</p>
+        <p><span class="mat-input bold">Date of Birth</span></p>
+        <!--<p>{{ currentUser.dateOfBirth | date: 'mediumDate' }}</p>-->
+      </mat-card-content>
+    </mat-card>
+  </div>
+}

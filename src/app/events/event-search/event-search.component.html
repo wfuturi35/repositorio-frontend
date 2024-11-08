@@ -1,0 +1,77 @@
+<div *ngIf="(events$ | async)?.length === 0" class="flex flex-col items-center justify-center h-full py-10">
+  <i class="pi pi-search text-6xl text-gray-400 mb-5"></i> <!-- Icono de búsqueda (PrimeNG) -->
+  <h2 class="text-lg font-semibold text-gray-700 mb-2">No se encontraron resultados</h2>
+  <p class="text-gray-500 text-center mb-4">
+    Intenta buscar otra cosa o revisa la ortografía de tu búsqueda.
+  </p>
+  <!-- Botón con Angular Material -->
+  <button mat-raised-button color="primary" routerLink="/events/home" class="px-6 py-2">
+    <mat-icon>home</mat-icon>
+    Ir a la página de inicio
+  </button>
+</div>
+
+
+@if ( events$ | async; as events) {
+  <div class="event-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    @for (event of events; track event.id) {
+      <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow m-2 p-3">
+        <div class="mb-3">
+          <div class="relative mx-auto">
+            <img
+              [src]="event.imgEvent"
+              [alt]="event.title"
+              width="200"
+              height="200"
+              class="w-full border-round"
+            />
+            <p-tag
+              [value]="getCategoryName(event.categoria_id)"
+              [severity]="getSeverity(getCategoryName(event.categoria_id))"
+              class="absolute"
+              [ngStyle]="{ 'left.px': 5, 'top.px': 5 }"
+            ></p-tag>
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <!-- Mostrar las estrellas dinámicamente según el rate -->
+          <div class="mb-3 font-medium">
+            <ng-container *ngFor="let star of getStars(event.rate)">
+              <i class="pi pi-star" [ngStyle]="{'color': star.filled ? 'gold' : 'gray'}"></i>
+            </ng-container>
+          </div>
+
+          <!-- Botón de corazón que cambia de color al hacer clic -->
+          <span>
+            <button class="p-button-rounded p-button-text like-button"
+                    (click)="toggleFavorite(event.id)">
+              <!-- Corazón no liked (gris) -->
+              <i *ngIf="!likedEvents[event.id]" class="pi pi-heart"></i>
+              <!-- Corazón liked (rojo) -->
+              <i *ngIf="likedEvents[event.id]" class="pi pi-heart-fill"></i>
+            </button>
+          </span>
+        </div>
+        <div class="mb-3 font-medium">{{ event.title }}</div>
+        <div class="mb-2">
+          <i class="pi pi-calendar" style="color: var(--primary-color)"></i>
+          {{ event.start_date }} - {{ event.end_date }}
+        </div>
+        <div class="flex justify-between items-center">
+          <div>
+            <i class="pi pi-dollar" style="color: green"></i>
+            Costo entrada (referencial):
+          </div>
+          <div class="mt-0 font-semibold text-xl">{{ 'S/' + event.price }}</div>
+        </div>
+        <div class="flex items-center justify-end mt-2">
+          <button [routerLink]="['/events/details', event.id]" mat-flat-button class="bg-green-500">
+            Ver evento
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+

@@ -1,0 +1,32 @@
+<div class="flex flex-col items-center p-6 bg-gray-100 rounded-lg shadow-lg max-w-lg mx-auto">
+  <img
+    src="https://via.placeholder.com/150"
+    alt="Foto de usuario"
+    class="w-32 h-32 rounded-full border-4 border-teal-300 mb-4" />
+
+  <h2 class="text-2xl font-bold text-gray-800 mb-2">{{userMe.currentUser$.value.fullName}}</h2>
+
+  <div class="text-gray-600 mb-4">
+    <p class="flex items-center mb-2">
+      <i class="pi pi-envelope mr-2" style="color: var(--primary-color);"></i>
+      <span>{{userMe.currentUser$.value.email}}</span>
+    </p>
+    <p class="flex items-center mb-2">
+      <i class="pi pi-phone mr-2" style="color: var(--primary-color);"></i>
+      <span>Celular: {{userMe.currentUser$.value.phone}}</span>
+    </p>
+    <p class="flex items-center mb-2">
+      <i class="pi pi-user mr-2" style="color: var(--primary-color);"></i>
+      <span>Rol: {{userMe.currentUser$.value.role}}</span>
+    </p>
+  </div>
+
+  <button
+    pButton
+    label="Editar Perfil"
+    icon="pi pi-pencil"
+    class="w-full bg-teal-500 text-white hover:bg-teal-600 transition duration-200"
+    pTooltip="No disponible por el momento"
+    tooltipPosition="top">
+  </button>
+</div>
